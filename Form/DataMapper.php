@@ -137,14 +137,24 @@ class DataMapper implements DataMapperInterface{
             $this->translations = [];
             $translations = $this->getTranslations($data);
 
+            $methodName = 'get' . ucfirst($form->getName());
+            $defaultData = "";
+            if (method_exists($data, $methodName)){
+                $defaultData = $data->{$methodName}();
+            }
+
             if(false !== in_array($form->getName(), $this->property_names)) {
                 $values = [];
                 foreach($this->getLocales() as $iso){
                     if(isset($translations[$iso])){
                         $values[$iso] =  isset($translations[$iso][$form->getName()]) ? $translations[$iso][$form->getName()] : "";
-
                     }
                 }
+
+                if (isset($translations[$this->required_locale]) === false && $defaultData !== '') {
+                    $values[$this->required_locale] = $defaultData;
+                }
+
                 $form->setData($values);
             } else {
                 if (false === $form->getConfig()->getOption("mapped") || null === $form->getConfig()->getOption("mapped")) {
