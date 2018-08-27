@@ -5,6 +5,10 @@
         {
             "name": "Asier Marqués",
             "email": "asiermarques@gmail.com"
+        },
+        {
+            "name": "René Welbers / WERECO GmbH",
+            "email": "info@wereco.de"
         }
     ],
     "type": "symfony-bundle",

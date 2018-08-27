@@ -7,7 +7,12 @@
 
 namespace Simettric\DoctrineTranslatableFormBundle\Interfaces;
 
-
-interface TranslatableFieldInterface {
+/**
+ * Interface TranslatableFieldInterface
+ *
+ * @package Simettric\DoctrineTranslatableFormBundle\Interfaces
+ */
+interface TranslatableFieldInterface
+{
 
 } 
