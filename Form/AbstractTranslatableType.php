@@ -7,34 +7,36 @@
 
 namespace Simettric\DoctrineTranslatableFormBundle\Form;
 
-
-
-
 use Symfony\Component\Form\Exception;
 use Symfony\Component\Form\FormBuilderInterface;
-
 use Symfony\Component\OptionsResolver\OptionsResolver;
-
-
+use Symfony\Component\Form\AbstractType;
 
 /**
  *
  * stof_doctrine_extensions:
-        default_locale: %locale%
-        translation_fallback: true
-        persist_default_translation: true
-        orm:
-            default:
-                translatable: true
+ * default_locale: %locale%
+ * translation_fallback: true
+ * persist_default_translation: true
+ * orm:
+ * default:
+ * translatable: true
  *
  * Class AbstractType
+ *
  * @package Simettric\DoctrineTranslatableFormBundle\Form
  */
-abstract class AbstractTranslatableType extends \Symfony\Component\Form\AbstractType{
+abstract class AbstractTranslatableType extends AbstractType
+{
 
+    /**
+     * @var array
+     */
+    private $locales = [];
 
-    private $locales=[];
-
+    /**
+     * @var
+     */
     private $required_locale;
 
     /**
@@ -42,29 +44,40 @@ abstract class AbstractTranslatableType extends \Symfony\Component\Form\Abstract
      */
     private $mapper;
 
-
-    function __construct(DataMapperInterface $dataMapper){
+    /**
+     * AbstractTranslatableType constructor.
+     *
+     * @param DataMapperInterface $dataMapper
+     */
+    function __construct(DataMapperInterface $dataMapper)
+    {
         $this->mapper = $dataMapper;
     }
 
-
-    public function setRequiredLocale($iso){
+    /**
+     * @param $iso
+     */
+    public function setRequiredLocale($iso)
+    {
         $this->required_locale = $iso;
     }
 
-    public function setLocales(array $locales){
+    /**
+     * @param array $locales
+     */
+    public function setLocales(array $locales)
+    {
         $this->locales = $locales;
     }
 
-
     /**
      * @param FormBuilderInterface $builderInterface
-     * @param array $options
+     * @param array                $options
+     *
      * @return DataMapperInterface
      */
-    protected function createTranslatableMapper(FormBuilderInterface $builderInterface, array $options){
-
-
+    protected function createTranslatableMapper(FormBuilderInterface $builderInterface, array $options)
+    {
 
         $this->mapper->setBuilder($builderInterface, $options);
         $this->mapper->setLocales($options["locales"]);
@@ -74,26 +87,20 @@ abstract class AbstractTranslatableType extends \Symfony\Component\Form\Abstract
         return $this->mapper;
     }
 
-
-
-
+    /**
+     * @param OptionsResolver $resolver
+     */
     protected function configureTranslationOptions(OptionsResolver $resolver)
     {
-
 
         $resolver->setRequired(["locales", "required_locale"]);
 
         $data = [
-            'locales'         => $this->locales?:["en"],
-            "required_locale" => $this->required_locale?:"en",
+            'locales'         => $this->locales ?: ["en"],
+            "required_locale" => $this->required_locale ?: "en",
         ];
-
 
         $resolver->setDefaults($data);
     }
-
-
-
-
 
 }
