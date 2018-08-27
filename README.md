@@ -66,7 +66,7 @@ You must to activate the persist_default_translation key in your stof_doctrine_e
 Configure the view
 ===================
 
-This bundle implements the **Bootstrap Tabs component** in order to show the different locale inputs for each field. 
+This bundle implements the **Bootstrap 4 Tabs component** in order to show the different locale inputs for each field. 
 
 If you want to use it, just add the template in the form_themes section in your Twig configuration. 
 Obviously, the bootstrap assets must be loaded in your layout.

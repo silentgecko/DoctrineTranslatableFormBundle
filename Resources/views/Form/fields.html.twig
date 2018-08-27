@@ -1,46 +1,71 @@
-{% use "bootstrap_3_layout.html.twig" %}
+{% use "bootstrap_4_layout.html.twig" %}
 
 
 {% block translatable_text_row %}
 
-    {{ form_label(form) }}
-    <ul class="nav nav-tabs">
-        {% for locale,child in form %}
-            <li role="presentation" class="{{ locale == app.request.locale?"active":"" }}">
-                <a aria-controls="trans-field-{{ form.vars.name }}-{{ locale }}" role="tab" data-toggle="tab" href="#trans-field-{{ form.vars.name }}-{{ locale }}">{{ child.vars.name|trans }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="form-group">
+        {{ form_label(form) }}
+        <ul class="nav nav-tabs" role="tablist">
+            {% for locale,child in form %}
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link {{ locale == app.request.locale?"active":"" }}"
+                       aria-controls="trans-field-{{ form.vars.name }}-{{ locale }}"
+                       aria-selected="{{ locale == app.request.locale?"true":"false" }}"
+                       role="tab"
+                       data-toggle="tab"
+                       href="#trans-field-{{ form.vars.name }}-{{ locale }}">
+                        {{ child.vars.name|trans }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <!-- Tab panes -->
-    <div class="tab-content" style="margin-top: 10px">
-    {% for locale,child in form %}
-        <div role="tabpanel" class="tab-pane {{ locale == app.request.locale?"active":"" }}" id="trans-field-{{ form.vars.name }}-{{ locale }}">
-            {{ form_widget(child, {attr: form.vars.attr}) }}
+        <!-- Tab panes -->
+        <div class="tab-content" style="margin-top: 10px">
+            {% for locale,child in form %}
+                <div role="tabpanel"
+                     class="tab-pane fade {{ locale == app.request.locale?"show active":"" }}"
+                     id="trans-field-{{ form.vars.name }}-{{ locale }}"
+                     aria-labelledby="trans-field-{{ form.vars.name }}-{{ locale }}"
+                >
+                    {{ form_widget(child, {attr: form.vars.attr}) }}
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
     </div>
-
 
 {% endblock %}
 
 {% block translatable_textarea_row %}
-    {{ form_label(form) }}
-    <ul class="nav nav-tabs">
-        {% for locale,child in form %}
-            <li role="presentation" class="{{ locale == app.request.locale?"active":"" }}">
-                <a aria-controls="trans-field-{{ form.vars.name }}-{{ locale }}" role="tab" data-toggle="tab" href="#trans-field-{{ form.vars.name }}-{{ locale }}">{{ child.vars.name|trans }}</a>
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="form-group">
+        {{ form_label(form) }}
+        <ul class="nav nav-tabs" role="tablist">
+            {% for locale,child in form %}
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link {{ locale == app.request.locale?"active":"" }}"
+                       aria-controls="trans-field-{{ form.vars.name }}-{{ locale }}"
+                       aria-selected="{{ locale == app.request.locale?"true":"false" }}"
+                       role="tab"
+                       data-toggle="tab"
+                       href="#trans-field-{{ form.vars.name }}-{{ locale }}">
+                        {{ child.vars.name|trans }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
 
-    <!-- Tab panes -->
-    <div class="tab-content" style="margin-top: 10px">
-        {% for locale,child in form %}
-            <div role="tabpanel" class="tab-pane {{ locale == app.request.locale?"active":"" }}" id="trans-field-{{ form.vars.name }}-{{ locale }}">
-                {{ form_widget(child) }}
-            </div>
-        {% endfor %}
+        <!-- Tab panes -->
+        <div class="tab-content" style="margin-top: 10px">
+            {% for locale,child in form %}
+                <div role="tabpanel"
+                     class="tab-pane fade {{ locale == app.request.locale?"show active":"" }}"
+                     id="trans-field-{{ form.vars.name }}-{{ locale }}"
+                     aria-labelledby="trans-field-{{ form.vars.name }}-{{ locale }}"
+                >
+                    {{ form_widget(child) }}
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
 
