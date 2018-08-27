@@ -74,8 +74,9 @@ Obviously, the bootstrap assets must be loaded in your layout.
     # app/config/config.yml
     twig:
         ...
-        form_themes:
-            - 'SimettricDoctrineTranslatableFormBundle:Form:fields.html.twig'
+        paths:
+            '%kernel.root_dir%/../vendor/silentgecko/doctrine-translatable-form-bundle/Resources/views/Form/': 'DoctrineTranslatableForm'
+        form_themes: ['bootstrap_4_layout.html.twig', '@DoctrineTranslatableForm/fields.html.twig']
                 
                 
 Creating your forms
