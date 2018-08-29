@@ -199,12 +199,8 @@ class DataMapper implements DataMapperInterface
                 $values = [];
                 foreach ($this->getLocales() as $iso) {
                     if (isset($translations[$iso])) {
-                        $values[$iso] = isset($translations[$iso][$form->getName()]) ? $translations[$iso][$form->getName()] : "";
+                        $values[$iso] = isset($translations[$iso][$form->getName()]) ? $translations[$iso][$form->getName()] : $defaultData;
                     }
-                }
-
-                if (isset($translations[$this->required_locale]) === false && $defaultData !== '') {
-                    $values[$this->required_locale] = $defaultData;
                 }
 
                 $form->setData($values);
@@ -225,6 +221,8 @@ class DataMapper implements DataMapperInterface
      * @param mixed           $data  Structured data.
      *
      * @throws Exception\UnexpectedTypeException if the type of the data parameter is not supported.
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function mapFormsToData($forms, &$data)
     {
