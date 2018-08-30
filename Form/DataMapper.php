@@ -199,7 +199,11 @@ class DataMapper implements DataMapperInterface
                 $values = [];
                 foreach ($this->getLocales() as $iso) {
                     if (isset($translations[$iso])) {
-                        $values[$iso] = isset($translations[$iso][$form->getName()]) ? $translations[$iso][$form->getName()] : $defaultData;
+                        $values[$iso] = isset($translations[$iso][$form->getName()]) ? $translations[$iso][$form->getName()] : "";
+                    }
+
+                    if ($iso === $this->required_locale && isset($values[$this->required_locale]) === false && $defaultData !== '') {
+                        $values[$this->required_locale] = $defaultData;
                     }
                 }
 
